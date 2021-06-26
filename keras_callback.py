@@ -58,7 +58,7 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               metrics=['accuracy'])
  
 #defining our callbacks
-filepath = 'C:/Users/Niranjan/Desktop/weights/weights-{epoch:02d}-{val_acc:.2f}.hdf5'
+filepath = '/content/weights/weights-{epoch:02d}-{val_accuracy:.2f}.hdf5'
 early_stop = EarlyStopping(monitor='val_loss',patience=7, verbose=1, mode='auto')
 model_ckpt = ModelCheckpoint(monitor='val_loss', save_best_only=True, verbose=1, mode='auto',filepath=filepath)
 csv_log = CSVLogger('training.log', append=False)
@@ -67,7 +67,7 @@ tb = TensorBoard(log_dir='./logs', histogram_freq=0, write_graph=True, write_ima
  
 def on_epoch_end(_,logs):
     THRESHOLD = 0.90
-    if(logs['val_acc']> THRESHOLD):
+    if(logs['val_accuracy']> THRESHOLD):
         model.stop_training=True
 stop_train = LambdaCallback(on_epoch_end=on_epoch_end)
  
